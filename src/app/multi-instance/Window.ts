@@ -14,12 +14,19 @@ export default class CacaoWindow {
   private _container: HTMLElement;
   static $inject: string[];
 
-  constructor(app: MultiInstanceApplication) {
+  constructor(app: MultiInstanceApplication, playbookId: string | null = null) {
     this._container = document.createElement('div');
     this._container.id = 'cacaoWindow';
     this._app = app;
     this._headerEntry = this.createHeaderEntry();
-    this.initPage();
+
+    if (playbookId !== null) {
+      console.log(`Playbook ID: ${playbookId}`);
+      // Initialize with playbookId
+      this.loadPlaybook(playbookId);
+    } else {
+      this.initPage();
+    }
   }
 
   get headerTabEntry() {
@@ -37,6 +44,38 @@ export default class CacaoWindow {
 
   hide() {
     this._headerEntry.classList.remove('tab-open');
+  }
+
+  private async loadPlaybook(playbookId: string) {
+    try {
+      const response = await fetch(`http://localhost:8000/playbooks/${playbookId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const playbook = await response.json();
+      console.log('Fetched playbook:', playbook);
+      // TODO: Remove _id
+      delete playbook['_id'];
+      this.initPageWithPlaybook(playbook);
+    } catch (e: any) {
+      console.error('Failed to fetch playbook:', e);
+      window.location.href = 'http://localhost:3000';
+    }
+  }
+
+  private initPageWithPlaybook(playbook: any) {
+    // Initialize app with the fetched playbook
+    try {
+      if (isCacaoPlaybook(playbook)) {
+        this.loadEditor(new Playbook(playbook));
+      } else if (playbook['playbook'] != undefined && isCacaoPlaybook(playbook['playbook'])) {
+        this.loadEditor(new Playbook(playbook['playbook']), playbook['execution_status']);
+      } else {
+        throw new Error('The JSON fetched is not a CACAO playbook');
+      }
+    } catch (e: any) {
+      cacaoDialog.showAlert('Error when trying to fetch a playbook', e.message);
+    }
   }
 
   private initPage() {
