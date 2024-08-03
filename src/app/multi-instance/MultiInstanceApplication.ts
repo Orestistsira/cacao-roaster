@@ -9,7 +9,7 @@ export default class MultiInstanceApplication extends Application {
 
   constructor(
     container: HTMLElement,
-    playbookId: string | null = null,
+    playbookId: string | undefined = undefined,
     isHistory: boolean = false,
   ) {
     super(container);
@@ -67,7 +67,10 @@ export default class MultiInstanceApplication extends Application {
     header.appendChild(add);
   }
 
-  private newWindow(playbookId: string | null = null, isHistory: boolean = false): CacaoWindow {
+  private newWindow(
+    playbookId: string | undefined = undefined,
+    isHistory: boolean = false,
+  ): CacaoWindow {
     let window = new CacaoWindow(this, playbookId, isHistory);
     this._windows.push(window);
     this.addHeaderTab(window.headerTabEntry);

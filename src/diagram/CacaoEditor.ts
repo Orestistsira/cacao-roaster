@@ -67,6 +67,7 @@ export default class CacaoEditor {
     container: HTMLElement,
     playbook: Playbook,
     executionStatus: any = {},
+    isHistory: boolean,
   ) {
     this.container = container;
     this.canvasContainer = document.createElement('div');
@@ -93,6 +94,7 @@ export default class CacaoEditor {
     this.canvas.setRootElement(this.root);
 
     this.playbookHandler = this.diagram.get('playbookHandler');
+    this.playbookHandler.isHistory = isHistory;
     this.commandStack = this.diagram.get('commandStack');
     this.eventBus.fire('editor.loaded');
   }

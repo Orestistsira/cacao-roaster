@@ -232,7 +232,19 @@ export default class CacaoHeader {
    * this method load all the action entries of the header
    */
   private loadHeaderOptionEntries() {
-    let entries: HeaderOptionEntry[] = [
+    let entries: HeaderOptionEntry[] = [];
+
+    if (!this._playbookHandler.isHistory) {
+      entries.push({
+        title: 'SAVE',
+        className: 'save',
+        action: (event: any) => {
+          this._playbookHandler.save();
+        },
+      });
+    }
+
+    entries.push(
       {
         title: 'EXPANDED MODE',
         className: this._cacaoModeling.isExpandedMode() ? 'expander expanded' : 'expander',
@@ -297,7 +309,7 @@ export default class CacaoHeader {
           this._cacaoSidePanel.openMetadataPanel();
         },
       },
-    ];
+    );
     this._headerOptions.innerHTML = '';
     for (let entry of entries) {
       this.createEntry(entry, this._headerOptions);
