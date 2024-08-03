@@ -128,15 +128,19 @@ export default class PlaybookHandler {
     return false;
   }
 
-  async save() {
-    if (!this.isPlaybookChanged) {
+  save() {
+    // First time saving playbook
+    if (!this.playbook.created) {
+      this.setPlaybookDates();
+      this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
+      this.savePlaybook();
       return;
     }
 
-    if ((this._playbook as any)['_id']) {
+    // Save updated playbook
+    if (this.isPlaybookChanged) {
+      this.setPlaybookModifiedDate();
       this.updatePlaybook();
-    } else {
-      this.savePlaybook();
     }
   }
 
@@ -169,7 +173,7 @@ export default class PlaybookHandler {
     }
   }
 
-  async updatePlaybook() {
+  private async updatePlaybook() {
     const id = (this._playbook as any)['_id'];
 
     const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
@@ -203,6 +207,13 @@ export default class PlaybookHandler {
       this.addPlaybookProperty('created', currentDate);
       this.addPlaybookProperty('modified', currentDate);
     }
+    if (this.isPlaybookChanged) {
+      this.addPlaybookProperty('modified', currentDate);
+    }
+  }
+
+  setPlaybookModifiedDate() {
+    let currentDate = new Date().toISOString();
     if (this.isPlaybookChanged) {
       this.addPlaybookProperty('modified', currentDate);
     }
