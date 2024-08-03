@@ -16,7 +16,7 @@ export default class CacaoWindow {
 
   constructor(
     app: MultiInstanceApplication,
-    playbookId: string | null = null,
+    playbookId: string | undefined = undefined,
     isHistory: boolean = false,
   ) {
     this._container = document.createElement('div');
@@ -24,7 +24,7 @@ export default class CacaoWindow {
     this._app = app;
     this._headerEntry = this.createHeaderEntry();
 
-    if (playbookId !== null) {
+    if (playbookId) {
       console.log(`Playbook ID: ${playbookId}`);
 
       if (isHistory) {

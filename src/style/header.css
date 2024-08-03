@@ -211,6 +211,10 @@
   --svg: url('../assets/icons/verify.svg');
 }
 
+.save {
+  --svg: url('../assets/icons/save.svg');
+}
+
 .expander .entry__icon {
   position: relative;
   background-color: transparent !important;

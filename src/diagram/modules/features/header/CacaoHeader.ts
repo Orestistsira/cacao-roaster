@@ -234,6 +234,13 @@ export default class CacaoHeader {
   private loadHeaderOptionEntries() {
     let entries: HeaderOptionEntry[] = [
       {
+        title: 'SAVE',
+        className: 'save',
+        action: (event: any) => {
+          this._playbookHandler.save();
+        },
+      },
+      {
         title: 'EXPANDED MODE',
         className: this._cacaoModeling.isExpandedMode() ? 'expander expanded' : 'expander',
         action: (event: any) => {
