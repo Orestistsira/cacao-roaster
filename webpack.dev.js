@@ -13,7 +13,14 @@ module.exports = {
     compress: true,
     port: 3000,
     open: true,
-    historyApiFallback: true, // Serve index.html for all routes
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: '/index.html' },
+        { from: /^\/\w+$/, to: '/index.html' }, // Handles /playbook_id
+        { from: /^\/history\/\w+$/, to: '/index.html' }, // Handles /history/playbook_id
+        { from: /./, to: '/404.html' }, // Handles everything else
+      ],
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:8000',

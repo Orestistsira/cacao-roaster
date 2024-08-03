@@ -13,16 +13,28 @@ window.addEventListener('load', () => {
   // Extract the playbook_id from the URL
   const urlPath = window.location.pathname;
   console.log('Url:', urlPath);
-  const playbookId = urlPath.substring(1); // Remove the leading '/'
 
-  // Check if the parsed playbookId is a valid id
-  if (playbookId) {
-    // Initialize with valid playbook_id
+  // Handle root path
+  if (urlPath === '/') {
+    new MultiInstanceApplication(container);
+    return;
+  }
+
+  // Handle /playbook_id and /history/playbook_id
+  const segments = urlPath.split('/').filter(segment => segment);
+  if (segments.length === 1) {
+    // Initialize with playbook
+    const playbookId = segments[0];
     console.log(`Playbook ID: ${playbookId}`);
     new MultiInstanceApplication(container, playbookId);
+  } else if (segments.length === 2 && segments[0] === 'history') {
+    // Initialize with history playbook
+    const playbookId = segments[1];
+    console.log(`Playbook ID: ${playbookId}`);
+    new MultiInstanceApplication(container, playbookId, true);
   } else {
-    // Handle cases where playbookId is not in path
-    console.log('Empty Playbook ID, initializing without it');
-    new MultiInstanceApplication(container);
+    // Invalid path
+    console.log('Invalid path, redirecting to 404');
+    window.location.href = '/404.html';
   }
 });

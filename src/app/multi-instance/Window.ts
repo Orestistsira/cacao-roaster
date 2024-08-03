@@ -14,7 +14,11 @@ export default class CacaoWindow {
   private _container: HTMLElement;
   static $inject: string[];
 
-  constructor(app: MultiInstanceApplication, playbookId: string | null = null) {
+  constructor(
+    app: MultiInstanceApplication,
+    playbookId: string | null = null,
+    isHistory: boolean = false,
+  ) {
     this._container = document.createElement('div');
     this._container.id = 'cacaoWindow';
     this._app = app;
@@ -22,8 +26,14 @@ export default class CacaoWindow {
 
     if (playbookId !== null) {
       console.log(`Playbook ID: ${playbookId}`);
-      // Initialize with playbookId
-      this.loadPlaybook(playbookId);
+
+      if (isHistory) {
+        // Initialize history with playbookId
+        this.loadHistoryPlaybook(playbookId);
+      } else {
+        // Initialize with playbookId
+        this.loadPlaybook(playbookId);
+      }
     } else {
       this.initPage();
     }
@@ -48,7 +58,7 @@ export default class CacaoWindow {
 
   private async loadPlaybook(playbookId: string) {
     try {
-      const response = await fetch(`api/playbooks/${playbookId}`);
+      const response = await fetch(`/api/playbooks/${playbookId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -57,7 +67,22 @@ export default class CacaoWindow {
       this.initPageWithPlaybook(playbook);
     } catch (e: any) {
       console.error('Failed to fetch playbook:', e);
-      window.location.href = 'http://localhost:3000';
+      window.location.href = '/404.html';
+    }
+  }
+
+  private async loadHistoryPlaybook(playbookId: string) {
+    try {
+      const response = await fetch(`/api/playbooks/history/${playbookId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const playbook = await response.json();
+      console.log('Fetched playbook:', playbook);
+      this.initPageWithPlaybook(playbook);
+    } catch (e: any) {
+      console.error('Failed to fetch playbook:', e);
+      window.location.href = '/404.html';
     }
   }
 
