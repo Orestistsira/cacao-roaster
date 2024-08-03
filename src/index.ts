@@ -15,14 +15,14 @@ window.addEventListener('load', () => {
   console.log('Url:', urlPath);
   const playbookId = urlPath.substring(1); // Remove the leading '/'
 
-  // Check if the parsed playbookId is a valid number
+  // Check if the parsed playbookId is a valid id
   if (playbookId) {
     // Initialize with valid playbook_id
     console.log(`Playbook ID: ${playbookId}`);
     new MultiInstanceApplication(container, playbookId);
   } else {
-    // Handle cases where playbookId is not a valid number
-    console.log('Invalid Playbook ID, initializing without it');
+    // Handle cases where playbookId is not in path
+    console.log('Empty Playbook ID, initializing without it');
     new MultiInstanceApplication(container);
   }
 });

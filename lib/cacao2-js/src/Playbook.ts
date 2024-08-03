@@ -18,6 +18,7 @@ export interface PlaybookProps {
   type: 'playbook';
   spec_version: 'cacao-2.0';
   id: Identifier;
+  _id: Identifier;
   name: string;
   description: string;
   playbook_types: string[];
@@ -73,6 +74,7 @@ export class Playbook {
     const props: PlaybookProps = partialprops as PlaybookProps;
     this.type = 'playbook';
     this.spec_version = 'cacao-2.0';
+    this._id = props._id;
     this.id = props.id;
     this.name = props.name;
     this.description = props.description;
@@ -114,9 +116,7 @@ export class Playbook {
     }
     this.external_references = [];
     if (props.external_references) {
-      this.external_references = props.external_references.map(
-        refs => new ExternalReference(refs),
-      );
+      this.external_references = props.external_references.map(refs => new ExternalReference(refs));
     }
     this.markings = [];
     if (props.markings) {
@@ -142,8 +142,7 @@ export class Playbook {
     this.authentication_info_definitions = {};
     for (const id in props.authentication_info_definitions) {
       const auth = props.authentication_info_definitions[id];
-      this.authentication_info_definitions[id] =
-        AuthenticationInfoFactory.create(auth);
+      this.authentication_info_definitions[id] = AuthenticationInfoFactory.create(auth);
     }
     this.agent_definitions = {};
     for (const id in props.agent_definitions) {
@@ -170,9 +169,7 @@ export class Playbook {
     }
     this.signatures = [];
     if (props.signatures) {
-      this.signatures = props.signatures.map(
-        signature => new Signature(signature),
-      );
+      this.signatures = props.signatures.map(signature => new Signature(signature));
     }
   }
 
@@ -203,20 +200,14 @@ export class Playbook {
         this.target_definitions[id] = AgentTargetFactory.create(target);
       }
       return true;
-    } else if (
-      prop === 'extension_definitions' &&
-      props.extension_definitions
-    ) {
+    } else if (prop === 'extension_definitions' && props.extension_definitions) {
       this.extension_definitions = {};
       for (const id in props.extension_definitions) {
         const extension = props.extension_definitions[id];
         this.extension_definitions[id] = new ExtensionDefinition(extension);
       }
       return true;
-    } else if (
-      prop === 'data_marking_definitions' &&
-      props.data_marking_definitions
-    ) {
+    } else if (prop === 'data_marking_definitions' && props.data_marking_definitions) {
       this.data_marking_definitions = {};
       for (const id in props.data_marking_definitions) {
         let marking = props.data_marking_definitions[id];
@@ -253,9 +244,7 @@ export class Playbook {
       ) {
         if (!this.updateObjectProperty(props, prop)) {
           if (Array.isArray(props[prop as keyof PlaybookProps])) {
-            (this as any)[prop] = Array.from(
-              props[prop as keyof PlaybookProps] as any,
-            );
+            (this as any)[prop] = Array.from(props[prop as keyof PlaybookProps] as any);
           } else {
             (this as any)[prop] = props[prop as keyof PlaybookProps];
           }

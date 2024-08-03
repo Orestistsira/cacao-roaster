@@ -14,5 +14,12 @@ module.exports = {
     port: 3000,
     open: true,
     historyApiFallback: true, // Serve index.html for all routes
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      },
+    },
   },
 };

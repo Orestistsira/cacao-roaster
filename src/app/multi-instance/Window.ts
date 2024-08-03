@@ -48,14 +48,12 @@ export default class CacaoWindow {
 
   private async loadPlaybook(playbookId: string) {
     try {
-      const response = await fetch(`http://localhost:8000/playbooks/${playbookId}`);
+      const response = await fetch(`api/playbooks/${playbookId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const playbook = await response.json();
       console.log('Fetched playbook:', playbook);
-      // TODO: Remove _id
-      delete playbook['_id'];
       this.initPageWithPlaybook(playbook);
     } catch (e: any) {
       console.error('Failed to fetch playbook:', e);
