@@ -40,6 +40,7 @@ export type ContextPlaybookAttrs = {
  */
 export default class PlaybookHandler {
   private _playbook: Playbook = {} as Playbook;
+  private _isHistory: boolean = false;
 
   private _initialPlaybook: Playbook;
   private _eventBus: EventBus;
@@ -116,6 +117,14 @@ export default class PlaybookHandler {
 
   set initialPlaybook(playbook: Playbook) {
     this._initialPlaybook = new Playbook(playbook);
+  }
+
+  set isHistory(isHistory: boolean) {
+    this._isHistory = isHistory;
+  }
+
+  get isHistory(): boolean {
+    return this._isHistory;
   }
 
   isAgentDefinition(agent: string): boolean {

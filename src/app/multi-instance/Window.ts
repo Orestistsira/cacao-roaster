@@ -6,6 +6,9 @@ import UserSettingsProps from '../UserSettingsProps';
 import cacaoDialog from '../../diagram/modules/core/CacaoDialog';
 
 export default class CacaoWindow {
+  private playbookId: string | undefined;
+  private isHistory: boolean;
+
   private _headerEntry: HTMLElement;
   private _headerEntryTextElement!: HTMLElement;
   private _headerEntryTlpIndicator!: HTMLElement;
@@ -19,6 +22,9 @@ export default class CacaoWindow {
     playbookId: string | undefined = undefined,
     isHistory: boolean = false,
   ) {
+    this.playbookId = playbookId;
+    this.isHistory = isHistory;
+
     this._container = document.createElement('div');
     this._container.id = 'cacaoWindow';
     this._app = app;
@@ -29,10 +35,10 @@ export default class CacaoWindow {
 
       if (isHistory) {
         // Initialize history with playbookId
-        this.loadHistoryPlaybook(playbookId);
+        this.loadHistoryPlaybook();
       } else {
         // Initialize with playbookId
-        this.loadPlaybook(playbookId);
+        this.loadPlaybook();
       }
     } else {
       this.initPage();
@@ -56,9 +62,9 @@ export default class CacaoWindow {
     this._headerEntry.classList.remove('tab-open');
   }
 
-  private async loadPlaybook(playbookId: string) {
+  private async loadPlaybook() {
     try {
-      const response = await fetch(`/api/playbooks/${playbookId}`);
+      const response = await fetch(`/api/playbooks/${this.playbookId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -71,9 +77,9 @@ export default class CacaoWindow {
     }
   }
 
-  private async loadHistoryPlaybook(playbookId: string) {
+  private async loadHistoryPlaybook() {
     try {
-      const response = await fetch(`/api/playbooks/history/${playbookId}`);
+      const response = await fetch(`/api/playbooks/history/${this.playbookId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -384,7 +390,7 @@ export default class CacaoWindow {
     }
     this._container.className = '';
     this._container.textContent = '';
-    this._editor = new CacaoEditor(this._container, playbook, status);
+    this._editor = new CacaoEditor(this._container, playbook, status, this.isHistory);
     this._editor.addListener(() => {
       this.updateWindowTab(this._editor.playbook.name ?? '');
     });
