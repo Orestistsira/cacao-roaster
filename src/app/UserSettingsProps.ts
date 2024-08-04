@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 export default class UserSettingsProps {
   static instance: UserSettingsProps = new UserSettingsProps();
 
-  identifier: Identifier = 'identity--' + uuidv4();
+  // identifier: Identifier = 'identity--' + uuidv4();
+  identifier: Identifier = 'identity--c381e342-8d07-47c9-96f1-5b0e3b832a0f';
   private identifierPattern =
     '^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$';
   secretKey: string = '';

@@ -1,3 +1,5 @@
+type messageType = 'success' | 'error';
+
 export default class cacaoMessenger {
   private static _container: HTMLElement = document.getElementsByTagName('body')[0];
 
@@ -7,7 +9,7 @@ export default class cacaoMessenger {
    * this method will pop up a dialog message that will disappear after 3 seconds
    * @param message
    */
-  static showMessage(message: string, type: 'success' | 'error' = 'success') {
+  static showMessage(message: string, type: messageType = 'success') {
     let messageContainer = document.createElement('div');
     messageContainer.className = 'messenger-container';
 

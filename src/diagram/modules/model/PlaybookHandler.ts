@@ -20,6 +20,7 @@ import { CoordinatesExtensionIdentifier } from './SchemaTypes';
 import UserSettingsProps from '../../../app/UserSettingsProps';
 import isEqual from 'lodash.isequal';
 import CacaoMessenger from '../core/CacaoMessenger';
+import cacaoDialog from '../core/CacaoDialog';
 
 /**
  * Spefify the playbook changing
@@ -143,20 +144,40 @@ export default class PlaybookHandler {
     if (!this.playbook.created) {
       this.setPlaybookDates();
       this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
-      this.savePlaybook();
+      await this.savePlaybook();
+      return;
+    }
+
+    // User is not the owner
+    if (!this.isUserTheOwner) {
+      if (
+        await cacaoDialog.showConfirm(
+          'Save Playbook',
+          'You have modified a playbook that is not yours. This action will create a new playbook.',
+        )
+      ) {
+        // Create new playbook and save it
+        this.setPlaybookProperties(this.createDerivedPlaybook());
+        this.setPlaybookDates();
+        this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
+        if (await this.savePlaybook()) {
+          // Redirect to new playbook
+          window.location.href = `/${this.playbook._id}`;
+        }
+      }
       return;
     }
 
     // Save updated playbook
     if (this.isPlaybookChanged) {
-      this.setPlaybookModifiedDate();
-      this.updatePlaybook();
+      this.setPlaybookDates();
+      await this.updatePlaybook();
     } else {
       CacaoMessenger.showMessage('There are no changes to save', 'success');
     }
   }
 
-  private async savePlaybook() {
+  private async savePlaybook(): Promise<boolean> {
     const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
     console.log('Playbook:', jsonObject);
 
@@ -182,13 +203,15 @@ export default class PlaybookHandler {
       this.initialPlaybook = this.playbook;
 
       CacaoMessenger.showMessage('Playbook saved successfully!', 'success');
+      return true;
     } catch (error) {
       console.error('Error saving playbook:', error);
       CacaoMessenger.showMessage('Error saving playbook!', 'error');
+      return false;
     }
   }
 
-  private async updatePlaybook() {
+  private async updatePlaybook(): Promise<boolean> {
     const id = (this._playbook as any)['_id'];
 
     const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
@@ -213,9 +236,11 @@ export default class PlaybookHandler {
       this.initialPlaybook = this.playbook;
 
       CacaoMessenger.showMessage('Playbook saved successfully!', 'success');
+      return true;
     } catch (error) {
       console.error('Error updating playbook:', error);
       CacaoMessenger.showMessage('Error saving playbook!', 'error');
+      return false;
     }
   }
 
@@ -225,13 +250,6 @@ export default class PlaybookHandler {
       this.addPlaybookProperty('created', currentDate);
       this.addPlaybookProperty('modified', currentDate);
     }
-    if (this.isPlaybookChanged) {
-      this.addPlaybookProperty('modified', currentDate);
-    }
-  }
-
-  setPlaybookModifiedDate() {
-    let currentDate = new Date().toISOString();
     if (this.isPlaybookChanged) {
       this.addPlaybookProperty('modified', currentDate);
     }
