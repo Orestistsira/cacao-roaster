@@ -19,6 +19,7 @@ import { NextStepsConnectionExtension } from './coordinates-extension/NextStepsC
 import { CoordinatesExtensionIdentifier } from './SchemaTypes';
 import UserSettingsProps from '../../../app/UserSettingsProps';
 import isEqual from 'lodash.isequal';
+import CacaoMessenger from '../core/CacaoMessenger';
 
 /**
  * Spefify the playbook changing
@@ -137,7 +138,7 @@ export default class PlaybookHandler {
     return false;
   }
 
-  save() {
+  async save() {
     // First time saving playbook
     if (!this.playbook.created) {
       this.setPlaybookDates();
@@ -150,6 +151,8 @@ export default class PlaybookHandler {
     if (this.isPlaybookChanged) {
       this.setPlaybookModifiedDate();
       this.updatePlaybook();
+    } else {
+      CacaoMessenger.showMessage('There are no changes to save', 'success');
     }
   }
 
@@ -177,8 +180,11 @@ export default class PlaybookHandler {
       console.log(`ID: ${_id}`);
       this.addPlaybookProperty('_id', _id);
       this.initialPlaybook = this.playbook;
+
+      CacaoMessenger.showMessage('Playbook saved successfully!', 'success');
     } catch (error) {
       console.error('Error saving playbook:', error);
+      CacaoMessenger.showMessage('Error saving playbook!', 'error');
     }
   }
 
@@ -205,8 +211,11 @@ export default class PlaybookHandler {
       const result = await response.json();
       console.log('Playbook updated:', result);
       this.initialPlaybook = this.playbook;
+
+      CacaoMessenger.showMessage('Playbook saved successfully!', 'success');
     } catch (error) {
       console.error('Error updating playbook:', error);
+      CacaoMessenger.showMessage('Error saving playbook!', 'error');
     }
   }
 
