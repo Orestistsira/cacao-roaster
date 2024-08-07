@@ -235,13 +235,29 @@ export default class CacaoHeader {
     let entries: HeaderOptionEntry[] = [];
 
     if (!this._playbookHandler.isHistory) {
-      entries.push({
-        title: 'SAVE',
-        className: 'save',
-        action: (event: any) => {
-          this._playbookHandler.save();
+      entries.push(
+        {
+          title: 'SAVE',
+          className: 'save',
+          action: (event: any) => {
+            this._playbookHandler.save();
+          },
         },
-      });
+        {
+          title: 'EXECUTE',
+          className: 'execute',
+          action: (event: any) => {
+            // TODO: Add functionality
+          },
+        },
+        {
+          title: 'SHARE',
+          className: 'share',
+          action: (event: any) => {
+            // TODO: Add functionality
+          },
+        },
+      );
     }
 
     entries.push(

@@ -215,6 +215,14 @@
   --svg: url('../assets/icons/save.svg');
 }
 
+.execute {
+  --svg: url('../assets/icons/execute.svg');
+}
+
+.share {
+  --svg: url('../assets/icons/share.svg');
+}
+
 .expander .entry__icon {
   position: relative;
   background-color: transparent !important;
