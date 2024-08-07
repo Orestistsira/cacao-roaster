@@ -97,6 +97,7 @@ export default class CacaoEditor {
     this.playbookHandler.isHistory = isHistory;
     this.commandStack = this.diagram.get('commandStack');
     this.eventBus.fire('editor.loaded');
+    this.eventBus.fire('playbook.changed');
   }
 
   get playbook() {
