@@ -140,14 +140,6 @@ export default class PlaybookHandler {
   }
 
   async save() {
-    // First time saving playbook
-    if (!this.playbook.created) {
-      this.setPlaybookDates();
-      this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
-      await this.savePlaybook();
-      return;
-    }
-
     // User is not the owner
     if (!this.isUserTheOwner) {
       if (
@@ -165,6 +157,14 @@ export default class PlaybookHandler {
           window.location.href = `/${this.playbook._id}`;
         }
       }
+      return;
+    }
+
+    // First time saving playbook
+    if (!this.playbook._id) {
+      this.setPlaybookDates();
+      this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
+      await this.savePlaybook();
       return;
     }
 

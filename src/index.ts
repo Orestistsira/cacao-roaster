@@ -38,3 +38,12 @@ window.addEventListener('load', () => {
     window.location.href = '/404.html';
   }
 });
+
+// Change the URL path without reloading the page
+function changePath(newPath: string): void {
+  // Update the URL path
+  window.history.pushState({}, '', newPath);
+
+  // You can trigger additional logic here if needed
+  console.log('New path:', window.location.pathname);
+}
