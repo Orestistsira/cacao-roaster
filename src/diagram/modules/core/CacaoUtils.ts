@@ -11,9 +11,7 @@ export default class CacaoUtils {
    * @param element must be a Shape or Connection
    * @returns the type as a CacaoConnectionType or CacaoConstructType. Return undefined if not found
    */
-  static getTypeOfElement(
-    element: any,
-  ): CacaoConnectionType | CacaoConstructType | undefined {
+  static getTypeOfElement(element: any): CacaoConnectionType | CacaoConstructType | undefined {
     return element.type;
   }
 
@@ -102,10 +100,13 @@ export default class CacaoUtils {
 
     const filteredEntries = Object.entries(obj)
       .map(([key, value]) => [key, CacaoUtils.filterEmptyValues(value)])
-      .filter(
-        ([key, value]) => value !== '' && value !== null && value !== undefined,
-      );
+      .filter(([key, value]) => value !== '' && value !== null && value !== undefined);
     const filteredObject = Object.fromEntries(filteredEntries);
+
+    // Remove database _id from playbook if it exists
+    if ((filteredObject as any)['_id']) {
+      delete (filteredObject as any)['_id'];
+    }
     return Object.keys(filteredObject).length > 0 ? filteredObject : undefined;
   }
 }

@@ -212,14 +212,13 @@ export default class PlaybookHandler {
   }
 
   private async updatePlaybook(): Promise<boolean> {
-    const id = (this._playbook as any)['_id'];
+    const mongo_id = (this._playbook as any)['_id'];
 
     const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
-    delete jsonObject['_id'];
     console.log('Playbook:', jsonObject);
 
     try {
-      const response = await fetch(`/api/playbooks/${id}`, {
+      const response = await fetch(`/api/playbooks/${mongo_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
