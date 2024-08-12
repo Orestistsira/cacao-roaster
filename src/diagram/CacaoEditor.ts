@@ -109,10 +109,15 @@ export default class CacaoEditor {
   }
 
   async canLeave(): Promise<boolean> {
+    // Check if playbook is saved on the database and is not updated
+    if (this.playbookHandler.isPlaybookSaved && !this.playbookHandler.isPlaybookChanged) {
+      return true;
+    }
+
     if (
       await CacaoDialog.showConfirm(
         'Are you sure you want to leave this tab?',
-        'You will not be able to recover the current playbook. <br>You can save it first using the EXPORT button before leaving.',
+        'You will not be able to recover the current playbook. <br>You can use the SAVE button to save it first or use the EXPORT button to export it before leaving.',
       )
     ) {
       return true;

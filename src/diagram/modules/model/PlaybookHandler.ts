@@ -113,6 +113,13 @@ export default class PlaybookHandler {
     return returnValue;
   }
 
+  get isPlaybookSaved(): boolean {
+    if (this.playbook._id) {
+      return true;
+    }
+    return false;
+  }
+
   get playbook(): Playbook {
     return this._playbook;
   }
@@ -161,7 +168,7 @@ export default class PlaybookHandler {
     }
 
     // First time saving playbook
-    if (!this.playbook._id) {
+    if (!this.isPlaybookSaved) {
       this.setPlaybookDates();
       this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
       await this.savePlaybook();
