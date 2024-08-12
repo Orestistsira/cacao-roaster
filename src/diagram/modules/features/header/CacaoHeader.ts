@@ -53,12 +53,15 @@ export default class CacaoHeader {
 
     this.initHeader(tabContainer);
 
-    eventBus.on(['elements.changed', 'diagram.init', 'playbook.changed', 'editor.loaded'], () => {
-      this.updateName();
-      this.updateTags();
-      this.updateLabels();
-      this.loadHeaderOptionEntries();
-    });
+    eventBus.on(
+      ['elements.changed', 'diagram.init', 'playbook.changed', 'editor.loaded', 'playbook.saved'],
+      () => {
+        this.updateName();
+        this.updateTags();
+        this.updateLabels();
+        this.loadHeaderOptionEntries();
+      },
+    );
     this.updateName();
     this.updateTags();
     this.updateLabels();
@@ -76,6 +79,10 @@ export default class CacaoHeader {
     }
     if (playbookName === '') {
       playbookName = '';
+    }
+
+    if (this._playbookHandler.isPlaybookChanged || !this._playbookHandler.isPlaybookSaved) {
+      playbookName += '*';
     }
 
     if (playbookDescription === '') {

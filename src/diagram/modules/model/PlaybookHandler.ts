@@ -171,14 +171,18 @@ export default class PlaybookHandler {
     if (!this.isPlaybookSaved) {
       this.setPlaybookDates();
       this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
-      await this.savePlaybook();
+      if (await this.savePlaybook()) {
+        this._eventBus.fire('playbook.saved');
+      }
       return;
     }
 
     // Save updated playbook
     if (this.isPlaybookChanged) {
       this.setPlaybookDates();
-      await this.updatePlaybook();
+      if (await this.updatePlaybook()) {
+        this._eventBus.fire('playbook.saved');
+      }
     } else {
       CacaoMessenger.showMessage('There are no changes to save', 'success');
     }
