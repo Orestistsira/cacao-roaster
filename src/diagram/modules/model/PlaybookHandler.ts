@@ -265,6 +265,33 @@ export default class PlaybookHandler {
     }
   }
 
+  async execute() {
+    const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
+    console.log('Playbook:', jsonObject);
+
+    try {
+      const response = await fetch('/api/soarca/trigger/playbook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonObject),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Playbook sent for execution:', result);
+
+      CacaoMessenger.showMessage('Playbook sent to SOARCA successfully!', 'success');
+    } catch (error) {
+      console.error('Error updating playbook:', error);
+      CacaoMessenger.showMessage('Error while sending playbook to SOARCA!', 'error');
+    }
+  }
+
   /**
    * Gets the value of a step's property.
    * @param property the step's property

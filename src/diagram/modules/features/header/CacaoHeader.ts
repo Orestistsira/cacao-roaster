@@ -256,7 +256,7 @@ export default class CacaoHeader {
           title: 'EXECUTE',
           className: 'execute',
           action: (event: any) => {
-            // TODO: Add functionality
+            this._playbookHandler.execute();
           },
         },
         {
