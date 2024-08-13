@@ -243,6 +243,7 @@ export default class CacaoHeader {
   private loadHeaderOptionEntries() {
     let entries: HeaderOptionEntry[] = [];
 
+    // Check if playbook version is history
     if (!this._playbookHandler.isHistory) {
       entries.push(
         {
@@ -267,6 +268,14 @@ export default class CacaoHeader {
           },
         },
       );
+    } else {
+      entries.push({
+        title: 'REROLL',
+        className: 'reroll',
+        action: (event: any) => {
+          // TODO: Add functionality
+        },
+      });
     }
 
     entries.push(

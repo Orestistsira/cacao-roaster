@@ -223,6 +223,10 @@
   --svg: url('../assets/icons/share.svg');
 }
 
+.reroll {
+  --svg: url('../assets/icons/reroll.svg');
+}
+
 .expander .entry__icon {
   position: relative;
   background-color: transparent !important;

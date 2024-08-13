@@ -86,6 +86,10 @@ export default class CacaoWindow {
       const playbook = await response.json();
       console.log('Fetched playbook:', playbook);
       this.initPageWithPlaybook(playbook);
+      cacaoDialog.showAlert(
+        'History Version',
+        'This is not the current version of the playbook and any changes will not be saved. Please reroll this version of the playbook as current to edit it.',
+      );
     } catch (e: any) {
       console.error('Failed to fetch playbook:', e);
       window.location.href = '/404.html';
