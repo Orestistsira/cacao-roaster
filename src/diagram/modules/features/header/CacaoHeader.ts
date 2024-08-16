@@ -83,8 +83,10 @@ export default class CacaoHeader {
 
     // Check if playbook is not saved on the database or is updated
     // and add an '*' add the end of the name
-    if (this._playbookHandler.isPlaybookChanged || !this._playbookHandler.isPlaybookSaved) {
-      playbookName += '*';
+    if (!this._playbookHandler.isHistory) {
+      if (this._playbookHandler.isPlaybookChanged || !this._playbookHandler.isPlaybookSaved) {
+        playbookName += '*';
+      }
     }
 
     if (playbookDescription === '') {

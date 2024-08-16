@@ -16,7 +16,7 @@ module.exports = {
     historyApiFallback: {
       rewrites: [
         { from: /^\/$/, to: '/index.html' },
-        { from: /^\/\w+$/, to: '/index.html' }, // Handles /playbook_id
+        { from: /^\/playbook--[\w-]+$/, to: '/index.html' }, // Handles /playbook--<UUID>
         { from: /^\/history\/\w+$/, to: '/index.html' }, // Handles /history/playbook_id
         { from: /./, to: '/404.html' }, // Handles everything else
       ],
