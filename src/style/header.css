@@ -223,8 +223,8 @@
   --svg: url('../assets/icons/share.svg');
 }
 
-.reroll {
-  --svg: url('../assets/icons/reroll.svg');
+.rollback {
+  --svg: url('../assets/icons/rollback.svg');
 }
 
 .expander .entry__icon {

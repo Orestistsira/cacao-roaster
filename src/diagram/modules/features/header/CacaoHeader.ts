@@ -272,8 +272,8 @@ export default class CacaoHeader {
       );
     } else {
       entries.push({
-        title: 'REROLL',
-        className: 'reroll',
+        title: 'ROLLBACK',
+        className: 'rollback',
         action: (event: any) => {
           // TODO: Add functionality
         },
