@@ -161,7 +161,7 @@ export default class PlaybookHandler {
         this.addPlaybookProperty('created_by', UserSettingsProps.instance.identifier);
         if (await this.savePlaybook()) {
           // Redirect to new playbook
-          window.location.href = `/${this.playbook._id}`;
+          window.location.href = `/${this.playbook.id}`;
         }
       }
       return;
