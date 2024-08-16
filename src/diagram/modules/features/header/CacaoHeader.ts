@@ -275,7 +275,7 @@ export default class CacaoHeader {
         title: 'ROLLBACK',
         className: 'rollback',
         action: (event: any) => {
-          // TODO: Add functionality
+          this._playbookHandler.rollback();
         },
       });
     }

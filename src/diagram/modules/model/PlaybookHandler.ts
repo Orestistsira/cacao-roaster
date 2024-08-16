@@ -287,8 +287,46 @@ export default class PlaybookHandler {
 
       CacaoMessenger.showMessage('Playbook sent to SOARCA successfully!', 'success');
     } catch (error) {
-      console.error('Error updating playbook:', error);
+      console.error('Error executing playbook:', error);
       CacaoMessenger.showMessage('Error while sending playbook to SOARCA!', 'error');
+    }
+  }
+
+  async rollback() {
+    if (await this.rollbackPlaybook()) {
+      // Redirect to current version of playbook
+      window.location.href = `/${this.playbook.id}`;
+    }
+  }
+
+  private async rollbackPlaybook(): Promise<boolean> {
+    const historyId = (this._playbook as any)['_id'];
+
+    const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
+    console.log('Playbook:', jsonObject);
+
+    try {
+      const response = await fetch(`/api/playbooks/rollback/${historyId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonObject),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Playbook rollback:', result);
+
+      CacaoMessenger.showMessage('Playbook rollback completed successfully!', 'success');
+      return true;
+    } catch (error) {
+      console.error('Error in playbook rollback:', error);
+      CacaoMessenger.showMessage('Error while performing rollback to playbook!', 'error');
+      return false;
     }
   }
 
