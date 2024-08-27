@@ -305,6 +305,33 @@ export default class PlaybookHandler {
     }
   }
 
+  async share() {
+    const jsonObject = CacaoUtils.filterEmptyValues(this._playbook);
+    console.log('Playbook:', jsonObject);
+
+    try {
+      const response = await fetch('/api/taxii/share/playbook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonObject),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Playbook shared:', result);
+
+      CacaoMessenger.showMessage('Playbook shared successfully to TAXII Server!', 'success');
+    } catch (error) {
+      console.error('Error executing playbook:', error);
+      CacaoMessenger.showMessage('Error while sharing playbook to TAXII Server!', 'error');
+    }
+  }
+
   async rollback() {
     if (await this.rollbackPlaybook()) {
       // Redirect to current version of playbook

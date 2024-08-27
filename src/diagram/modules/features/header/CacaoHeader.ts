@@ -268,7 +268,7 @@ export default class CacaoHeader {
           title: 'SHARE',
           className: 'share',
           action: (event: any) => {
-            // TODO: Add functionality
+            this._playbookHandler.share();
           },
         },
       );
