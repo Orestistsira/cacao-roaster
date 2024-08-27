@@ -114,8 +114,21 @@ export default class PlaybookHandler {
   }
 
   get isPlaybookSaved(): boolean {
-    if (this.playbook._id) {
+    if (this._playbook._id) {
       return true;
+    }
+    return false;
+  }
+
+  get isPlaybookRevoked(): boolean {
+    if (this._initialPlaybook) {
+      if (this._initialPlaybook.revoked == true) {
+        return true;
+      }
+    } else {
+      if (this._playbook.revoked == true) {
+        return true;
+      }
     }
     return false;
   }

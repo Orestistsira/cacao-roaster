@@ -71,6 +71,12 @@ export default class CacaoWindow {
       const playbook = await response.json();
       console.log('Fetched playbook:', playbook);
       this.initPageWithPlaybook(playbook);
+      if (playbook.revoked == true) {
+        cacaoDialog.showAlert(
+          'Revoked Playbook',
+          'This version of the playbook is revoked and any changes will not be saved.',
+        );
+      }
     } catch (e: any) {
       console.error('Failed to fetch playbook:', e);
       window.location.href = '/404.html';

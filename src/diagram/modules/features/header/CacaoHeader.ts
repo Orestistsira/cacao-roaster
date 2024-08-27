@@ -247,14 +247,16 @@ export default class CacaoHeader {
 
     // Check if playbook version is history
     if (!this._playbookHandler.isHistory) {
-      entries.push(
-        {
+      if (!this._playbookHandler.isPlaybookRevoked) {
+        entries.push({
           title: 'SAVE',
           className: 'save',
           action: (event: any) => {
             this._playbookHandler.save();
           },
-        },
+        });
+      }
+      entries.push(
         {
           title: 'EXECUTE',
           className: 'execute',
