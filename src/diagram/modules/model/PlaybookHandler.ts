@@ -206,7 +206,7 @@ export default class PlaybookHandler {
     console.log('Playbook:', jsonObject);
 
     try {
-      const response = await fetch('/api/playbooks/', {
+      const response = await fetch('/api/playbooks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
