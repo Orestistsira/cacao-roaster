@@ -23,7 +23,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://backend_service:8000',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       },
