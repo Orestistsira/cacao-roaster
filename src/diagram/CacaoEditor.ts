@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Modified playbook saving
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import Diagram from 'diagram-js';
 
 import PlaybookHandler from './modules/model/PlaybookHandler';

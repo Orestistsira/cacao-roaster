@@ -1,3 +1,11 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added playbookId, isHistory parameters
+// - Added functionality to load window with a playbook from db
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import { Playbook } from '../../../lib/cacao2-js/src/Playbook';
 import MultiInstanceApplication from './MultiInstanceApplication';
 import CacaoEditor from '../../diagram/CacaoEditor';

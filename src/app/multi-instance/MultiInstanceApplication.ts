@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added playbookId, isHistory parameters
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import Application from '../Application';
 import CacaoWindow from './Window';
 

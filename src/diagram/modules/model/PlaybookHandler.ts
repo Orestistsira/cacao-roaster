@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added functionalities to save, update, execute and share playbooks
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import { Playbook } from '../../../../lib/cacao2-js/src/Playbook';
 import { Identifier } from '../../../../lib/cacao2-js/src/data-types/Identifier';
 import { v4 as uuidv4 } from 'uuid';

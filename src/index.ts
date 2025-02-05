@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added functionality to open the app with a playbook from db loaded
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import 'bpmn-font/dist/css/bpmn.css';
 import 'diagram-js/assets/diagram-js.css';
 import 'diagram-js-minimap/assets/diagram-js-minimap.css';

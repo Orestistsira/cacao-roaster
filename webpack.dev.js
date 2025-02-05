@@ -1,3 +1,11 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added api service
+// - Added new history path
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 // webpack.dev.js
 const webpackCommon = require('./webpack.common');
 const path = require('path');

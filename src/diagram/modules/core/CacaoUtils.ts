@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Modified filterEmptyValues function
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import { CacaoConnectionType } from '../../elements/connections/CacaoBaseConnection';
 import { CacaoConstructType } from '../../elements/constructs/CacaoBaseConstruct';
 import { some } from 'min-dash';

@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added new header options
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import PlaybookHandler from '../../model/PlaybookHandler';
 import EventBus from 'diagram-js/lib/core/EventBus';
 import CacaoExporter from '../exporter/CacaoExporter';

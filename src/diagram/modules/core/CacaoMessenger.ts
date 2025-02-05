@@ -1,3 +1,10 @@
+// This file has been added.
+// Created by Orestis Tsirakis:
+// - Added cacaoMessenger class
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 type messageType = 'success' | 'error';
 
 export default class cacaoMessenger {

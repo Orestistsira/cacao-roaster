@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Added _id property for the mongo_id
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import { AgentTarget } from './agent-target/AgentTarget';
 import { ExternalReference } from './data-types/ExternalReference';
 import { Identifier } from './data-types/Identifier';

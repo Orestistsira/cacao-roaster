@@ -1,3 +1,10 @@
+// This file has been modified from its original version.
+// Changes made by Orestis Tsirakis:
+// - Modified identifier property to a const value
+
+// Original source: https://github.com/opencybersecurityalliance/cacao-roaster
+// Licensed under Apache License 2.0
+
 import { Identifier } from 'lib/cacao2-js/src/data-types/Identifier';
 import { v4 as uuidv4 } from 'uuid';
 
